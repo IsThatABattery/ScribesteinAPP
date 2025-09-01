@@ -14,14 +14,22 @@ struct LoginView: View {
             VStack(spacing: SSpace.l.rawValue) {
                 VStack(spacing: SSpace.s.rawValue) {
                     HStack(spacing: 0) {
-                        Button(action: { isSignUp = false }) {
+                        Button(action: {
+                            isSignUp = false
+                            authViewModel.clearMessages()
+                            localError = nil
+                        }) {
                             Text("Sign In")
                                 .frame(maxWidth: .infinity)
                                 .padding(.vertical, 10)
                                 .foregroundStyle(isSignUp ? SColor.textSecondary : SColor.accentOn)
                                 .background((isSignUp ? SColor.surface : SColor.accent))
                         }
-                        Button(action: { isSignUp = true }) {
+                        Button(action: {
+                            isSignUp = true
+                            authViewModel.clearMessages()
+                            localError = nil
+                        }) {
                             Text("Create Account")
                                 .frame(maxWidth: .infinity)
                                 .padding(.vertical, 10)
@@ -91,6 +99,8 @@ struct LoginView: View {
 
                     if !isSignUp {
                         Button("Forgot Password?") {
+                            authViewModel.clearMessages()
+                            localError = nil
                             showingForgotPassword = true
                         }
                         .buttonStyle(SButtonTertiary())

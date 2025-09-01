@@ -1,6 +1,7 @@
 import Foundation
 import Firebase
 import FirebaseAuth
+import FirebaseFunctions
 
 class AuthViewModel: ObservableObject {
     @Published var userSession: FirebaseAuth.User?
@@ -11,14 +12,38 @@ class AuthViewModel: ObservableObject {
     @Published var isEmailVerified: Bool = false
 
     private var handle: AuthStateDidChangeListenerHandle?
+    private var tokenHandle: IDTokenDidChangeListenerHandle?
+
+    lazy var functions = Functions.functions()
 
     init() {
         self.userSession = Auth.auth().currentUser
         self.handle = Auth.auth().addStateDidChangeListener { [weak self] _, user in
             self?.userSession = user
             self?.updateEmailVerificationState(with: user)
-            self?.checkAdminStatus()
         }
+        
+        self.tokenHandle = Auth.auth().addIDTokenDidChangeListener { [weak self] (auth, user) in
+            guard let user = user else {
+                self?.isAdmin = false
+                return
+            }
+            
+            user.getIDTokenResult(forcingRefresh: false) { (result, error) in
+                if let error = error {
+                    print("Error getting ID token result: \(error.localizedDescription)")
+                    self?.isAdmin = false
+                    return
+                }
+                
+                if let isAdmin = result?.claims["admin"] as? Bool, isAdmin {
+                    self?.isAdmin = true
+                } else {
+                    self?.isAdmin = false
+                }
+            }
+        }
+        
         self.updateEmailVerificationState(with: self.userSession)
     }
 
@@ -33,7 +58,6 @@ class AuthViewModel: ObservableObject {
             } else {
                 let user = authResult?.user ?? Auth.auth().currentUser
                 self?.updateEmailVerificationState(with: user)
-                self?.checkAdminStatus()
             }
         }
     }
@@ -50,7 +74,6 @@ class AuthViewModel: ObservableObject {
                 let user = authResult?.user ?? Auth.auth().currentUser
                 self?.updateEmailVerificationState(with: user)
                 // self?.sendEmailVerification()
-                self?.checkAdminStatus()
             }
         }
     }
@@ -61,6 +84,8 @@ class AuthViewModel: ObservableObject {
             self.userSession = nil
             self.isAdmin = false
             self.isEmailVerified = false
+            self.errorMessage = nil
+            self.infoMessage = nil
         } catch let signOutError as NSError {
             self.errorMessage = signOutError.localizedDescription
         }
@@ -78,6 +103,11 @@ class AuthViewModel: ObservableObject {
                 self?.infoMessage = "Password reset email sent to \(email)."
             }
         }
+    }
+
+    func clearMessages() {
+        errorMessage = nil
+        infoMessage = nil
     }
 
     func sendEmailVerification() {
@@ -115,28 +145,24 @@ class AuthViewModel: ObservableObject {
             let refreshedUser = Auth.auth().currentUser
             self?.userSession = refreshedUser
             self?.updateEmailVerificationState(with: refreshedUser)
-            self?.checkAdminStatus()
             completion?(self?.isEmailVerified == true)
         }
     }
 
-    private func checkAdminStatus() {
-        guard let user = userSession else { 
-            self.isAdmin = false
-            return
-        }
-        
-        user.getIDTokenResult(forcingRefresh: true) { result, error in
-            if let error = error {
-                self.errorMessage = error.localizedDescription
-                self.isAdmin = false
-                return
+    func setUserRole(email: String, role: String) {
+        functions.httpsCallable("set_role").call(["email": email, "role": role]) { [weak self] result, error in
+            if let error = error as NSError? {
+                if error.domain == FunctionsErrorDomain {
+                    let code = FunctionsErrorCode(rawValue: error.code)
+                    let message = error.localizedDescription
+                    let details = error.userInfo[FunctionsErrorDetailsKey]
+                    print("Error: \(message), code: \(String(describing: code)), details: \(String(describing: details))")
+                    self?.errorMessage = message
+                }
             }
-            
-            if let claims = result?.claims, let adminStatus = claims["admin"] as? Bool {
-                self.isAdmin = adminStatus
-            } else {
-                self.isAdmin = false
+            if let data = result?.data as? [String: Any], let message = data["message"] as? String {
+                print(message)
+                self?.infoMessage = message
             }
         }
     }
@@ -144,5 +170,14 @@ class AuthViewModel: ObservableObject {
     private func updateEmailVerificationState(with user: FirebaseAuth.User?) {
         // self.isEmailVerified = user?.isEmailVerified ?? false
         self.isEmailVerified = user != nil
+    }
+    
+    deinit {
+        if let handle = handle {
+            Auth.auth().removeStateDidChangeListener(handle)
+        }
+        if let tokenHandle = tokenHandle {
+            Auth.auth().removeIDTokenDidChangeListener(tokenHandle)
+        }
     }
 }

@@ -17,6 +17,13 @@ struct TranscriptFeedView: View {
             .navigationTitle("Transcripts")
 			.navigationBarTitleDisplayMode(.inline)
             .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    if authViewModel.isAdmin {
+                        NavigationLink(destination: AdminSettingsView()) {
+                            Image(systemName: "gearshape.fill")
+                        }
+                    }
+                }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Sign Out") {
                         authViewModel.signOut()

@@ -13,6 +13,7 @@
 		443CA1772E4BE3A2003744B4 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 443CA1762E4BE3A2003744B4 /* GoogleSignIn */; };
 		443CA1792E4BE3A2003744B4 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 443CA1782E4BE3A2003744B4 /* GoogleSignInSwift */; };
 		4488B52A2E4C5A2B00C8F4DA /* FirebaseAuthCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 4488B5292E4C5A2B00C8F4DA /* FirebaseAuthCombine-Community */; };
+		44D382A62E65FA7800D40E76 /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = 44D382A52E65FA7800D40E76 /* FirebaseFunctions */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +34,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				443CA1792E4BE3A2003744B4 /* GoogleSignInSwift in Frameworks */,
+				44D382A62E65FA7800D40E76 /* FirebaseFunctions in Frameworks */,
 				4488B52A2E4C5A2B00C8F4DA /* FirebaseAuthCombine-Community in Frameworks */,
 				443CA1682E4BA7E3003744B4 /* FirebaseFirestore in Frameworks */,
 				443CA1772E4BE3A2003744B4 /* GoogleSignIn in Frameworks */,
@@ -86,6 +88,7 @@
 				443CA1762E4BE3A2003744B4 /* GoogleSignIn */,
 				443CA1782E4BE3A2003744B4 /* GoogleSignInSwift */,
 				4488B5292E4C5A2B00C8F4DA /* FirebaseAuthCombine-Community */,
+				44D382A52E65FA7800D40E76 /* FirebaseFunctions */,
 			);
 			productName = ScribesteinAPP;
 			productReference = 443CA1452E4B8F21003744B4 /* ScribesteinAPP.app */;
@@ -99,7 +102,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1620;
-				LastUpgradeCheck = 1620;
+				LastUpgradeCheck = 1640;
 				TargetAttributes = {
 					443CA1442E4B8F21003744B4 = {
 						CreatedOnToolsVersion = 16.2;
@@ -185,6 +188,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = R6Z87Y9DF2;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -248,6 +252,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = R6Z87Y9DF2;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -277,7 +282,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ScribesteinAPP/Preview Content\"";
-				DEVELOPMENT_TEAM = R6Z87Y9DF2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Scribestein;
@@ -307,7 +311,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ScribesteinAPP/Preview Content\"";
-				DEVELOPMENT_TEAM = R6Z87Y9DF2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Scribestein;
@@ -401,6 +404,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 443CA1662E4BA7E3003744B4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = "FirebaseAuthCombine-Community";
+		};
+		44D382A52E65FA7800D40E76 /* FirebaseFunctions */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 443CA1662E4BA7E3003744B4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFunctions;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
