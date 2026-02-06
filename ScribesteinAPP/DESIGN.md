@@ -1,60 +1,60 @@
 Scribestein — Design System
 
-Last updated: 2025-08-13
+Last updated: 2026-02-06
 Owner: Design + iOS
 
 ## Vision
-A disciplined, editorial interface for fraternity operations. Dark navy surfaces with precise gold accents. Crisp edges, subtle elevation, clear hierarchy. Avoid the default iOS “bubble” look: no oversized corner radii, no pill buttons, no frothy shadows.
+A liquid glass interface for fraternity operations. Translucent, layered panels float over deep navy-blue gradients with precise gold accents. The aesthetic is inspired by iOS 26's native glass effects: frosted materials, subtle borders, and depth through translucency. Blue and gold remain the brand pillars.
 
 ## Brand Principles
-- Authority over whimsy
-- Precision over decoration
-- Editorial hierarchy over chrome
+- Depth through translucency, not shadow
 - Gold is precious: use sparingly to guide action
+- Glass panels create hierarchy through layering
+- Clean typography over frosted surfaces
+- Native feel — leverage platform materials
 
-## Color System (Dark-first)
+## Color System
 
 ### Brand Palette
-- Navy 1000: #060D1A — app background
-- Navy 950: #0A162B — primary surface
-- Navy 900: #0F1F3D — elevated surface
-- Navy 800: #14284D — interactive hover/pressed surface
-- Gold 600: #C49A2A — primary accent (actions, focus)
+- Navy 1000: #060D1A — deepest background layer
+- Navy 950: #0A162B — gradient midpoint
+- Navy 900: #0F1F3D — gradient accent
+- Navy 800: #14284D — interactive pressed state
+- Gold 600: #C49A2A — primary accent (CTAs, focus)
 - Gold 500: #D4AF37 — accent hover/focus ring
+- Blue 500: #388BE0 — secondary accent, tints
+- Blue 600: #2670C7 — active blue accent
 - Slate 500: #8FA1C1 — secondary text
 - Slate 300: #C1CBE0 — muted text/placeholder
-- Slate 200: #D6DEEF — hairlines on dark
-- Success: #2ED573
-- Warning: #F1C40F
-- Danger: #FF6B6B
-- Info: #2FA4F5
 
 ### Semantic Tokens
-- Background: Navy 1000
-- Surface: Navy 950
-- Surface/Alt (elevated): Navy 900
+- Background: Navy gradient (1000 → 950 → 900/Blue hint → 1000)
+- Surface: .ultraThinMaterial (iOS 17) / .glassEffect (iOS 26)
+- Surface/Alt: Navy 900 (for non-glass contexts)
 - Surface/Active: Navy 800
-- Stroke/Primary: rgba(214, 222, 239, 0.12) over dark
-- Stroke/Strong: rgba(214, 222, 239, 0.22)
+- Stroke/Glass: white @ 15% opacity
+- Stroke/GlassGold: Gold 600 @ 20% opacity
 - Text/Primary: #E8EEF9
 - Text/Secondary: Slate 500
 - Text/Muted: Slate 300
 - Accent/Fill: Gold 600
-- Accent/On: Navy 1000
+- Accent/On: Navy 1000 (text on gold)
 - Focus Ring: Gold 500 at 2pt
-- Link: Gold 500
-- Success/Fill: Success
-- Danger/Fill: Danger
-- Warning/Fill: Warning
+
+### Glass Effects
+- iOS 26+: `.glassEffect(.regular.tint(background.opacity(0.3)))` on cards and panels
+- iOS 17-25: `.ultraThinMaterial` background with 0.5px white stroke
+- Both: Subtle border at `Color.white.opacity(0.15)` for panel edges
 
 Rules:
-- Maintain ≥ 4.5:1 contrast for all body text.
-- Use gold primarily for CTAs, selection indicators, and focus—not general text.
+- Maintain ≥ 4.5:1 contrast for all body text over glass.
+- Use gold primarily for CTAs, selection indicators, and focus — not general text.
+- Glass panels should feel lightweight: avoid heavy borders or opaque fills.
 
 ## Typography
 
 - Primary: SF Pro Text
-- Alternate for headings (editorial): New York (serif) where available
+- Alternate for headings: New York (serif) where available
 - Weights: Regular, Medium, Semibold
 - Sizes (dynamic type aware):
   - Display: 34/40
@@ -64,234 +64,151 @@ Rules:
   - Callout: 16/22
   - Footnote: 13/18
   - Caption: 12/16
-- Numerics: Monospaced digits for ledger-like content
-- Line height: generous; avoid cramping in dark mode
+- Numerics: Monospaced digits for data-heavy content
+- Section headers: Uppercase, semibold, 0.5pt tracking, secondary color
 
 ## Layout, Spacing, Radii, Elevation
 
 - Grid: 8pt base (use 4pt for micro)
 - Spacing scale: 4, 8, 12, 16, 24, 32, 48, 64
-- Corner radii: 4 (tight), 6 (default), 8 (max). Avoid pills.
-- Borders: 1px hairline on dark; 2px for emphasis/focus
-- Elevation: favor borders and subtle overlays over heavy shadows; if used, soft ambient with low spread
+- Corner radii: 8 (tight/inputs), 16 (standard/cards), 24 (loose/panels)
+- Borders: 0.5px glass border on panels; 1px for emphasis/focus
+- Elevation: achieved through translucency and layering, not shadows
 
 ## Components
 
+### GlassCard
+- Primary container for all content sections
+- `.ultraThinMaterial` / `.glassEffect` background
+- 0.5px white border at 15% opacity
+- Corner radius 16 (standard)
+- 16pt content padding
+- Usage: transcript rows, poll cards, event cards, settings sections
+
+### GlassBackgroundView
+- Full-screen gradient behind all glass panels
+- Linear gradient: Navy 1000 → Navy 950 → Blue 600 @ 15% → Navy 1000
+- Applied as the root background layer
+
 ### App Bar / Navigation
-- Solid Surface background
-- 1px bottom divider (Stroke/Primary)
-- Title left-aligned; avoid large, floating headers
-- Gold underline indicator for active tab if used
+- Translucent material background (not opaque)
+- Gold tint accent for bar items
+- Inline title display
+
+### Tab Bar
+- Glass material background
+- Gold accent for selected tab
+- SF Symbols for tab icons
 
 ### Buttons
-- Primary: Gold 600 fill, Navy 1000 text, radius 6, no pill
-- Secondary: Outline (Gold 600 border, transparent fill), text Gold 600
-- Tertiary: Text-only in Gold 500
-- States: hover/pressed on dark via Surface/Active; disabled reduces alpha to ~0.4
+- Primary: Gold 600 fill, Navy 1000 text, radius 8, subtle press scale (0.97)
+- Secondary: Glass background with Gold 600 border at 20%, gold text
+- Tertiary: Text-only in Gold 600
+- All: 150ms ease-out press animation
 
 ### Text Fields
-- Fill: Surface/Alt
-- Border: 1px Stroke/Strong focused; 1px Stroke/Primary unfocused
+- `.ultraThinMaterial` background
+- 0.5px glass border
+- Corner radius 8 (tight)
 - Caret and focus ring: Gold 500
-- Radius 6, content insets 12/14
+- Content insets: 12pt
 
-### List Row
-- Full-width rows, minimal vertical spacing
-- 1px dividers; use insets to align with text grid
-- Selected state: Surface/Active background
-
-### Card
-- Surface/Alt background, 1px Stroke/Primary border, radius 6, minimal or no shadow
+### List Row / Transcript Row
+- Glass card container per row, or glass card for the full list
+- Comfortable vertical spacing
+- Thin dividers within cards
 
 ### Chip/Tag
-- Radius 4
+- Radius 8
 - Outline by default; filled for selected
-- Use Gold 600 for active filters sparingly
-
-### Tabs/Segmented
-- Rectilinear segments; avoid pill segmented control
-- Gold 600 2px bottom indicator line
-
-### Toast/Banner
-- Surface/Alt with 1px border; left stripe indicates status color
+- Gold 600 for active filters
 
 ## Patterns
 
 ### Login
-- Minimal, centered layout
-- Title with serif Display, body in SF Pro
-- Primary CTA: “Sign in with Google” in Gold 600
-- Secondary “Continue as guest” as Tertiary
+- Full-screen glass background gradient
+- Centered glass card with form fields
+- Primary CTA in gold
+- Secondary actions as tertiary text buttons
 
 ### Transcript Feed
-- Header: “Transcripts” left, filters as outline chips
-- Cells: title and date on top line; snippet below; right-aligned status tag
-- Subtle divider between cells; no grouped/bubbly lists
+- Glass background
+- Each transcript in a glass-styled row
+- Date uses monospaced digits
 
-### Transcript Detail
-- Title (Title or Display), metadata line (date, author), content blocks with generous line height
+### GroupMe Feed
+- Glass cards for announcements
+- Poll cards with options displayed, gold accent on active polls
+
+### Events
+- Glass cards with date badge, title, location
+- Chronological list with section headers
+
+### Settings / Admin
+- Glass card sections
+- Toggle and picker controls with gold accent
 
 ## Interaction, Motion, Haptics
 
-- Motion: subtle; ease-out for entrance, ease-in for exit; durations 120–200ms
-- Haptics: light on critical actions (success, failure); none on passive taps
-- Focus ring: 2pt Gold 500; do not rely on only color changes
+- Motion: ease-out 150ms for entrance; subtle scale on press (0.97)
+- Haptics: light impact on critical actions (success, failure)
+- Focus ring: 2pt Gold 500
+- Tab transitions: smooth cross-fade
 
 ## Accessibility
 
-- Color contrast ≥ 4.5:1 for text, 3:1 for larger text
+- Color contrast ≥ 4.5:1 for body text, 3:1 for larger text
 - Dynamic Type supported across components
 - Min tap area: 44x44pt
 - Reduce Motion respected
-- VoiceOver: clear labels, traits, and value changes
+- VoiceOver: clear labels, traits, value changes
 
 ## Asset Naming (XCAssets)
 
-Color sets (dark appearance):
-- Brand/Navy/1000
-- Brand/Navy/950
-- Brand/Navy/900
-- Brand/Navy/800
-- Brand/Gold/600
-- Brand/Gold/500
-- Text/Primary
-- Text/Secondary
-- Text/Muted
-- Stroke/Primary
-- Stroke/Strong
-- State/Success
-- State/Warning
-- State/Danger
-- State/Info
-- Surface/Background
-- Surface/Default
-- Surface/Alt
-- Surface/Active
+Color sets:
+- Brand/Navy/1000, 950, 900, 800
+- Brand/Gold/600, 500
+- Brand/Blue/500, 600
+- Text/Primary, Secondary, Muted
+- Stroke/Primary, Strong
+- State/Success, Warning, Danger, Info
+- Surface/Background, Default, Alt, Active
 
 ## iOS Implementation Notes (SwiftUI)
 
-Create a theme layer and use it consistently. Avoid per-view ad-hoc styling.
-
+### Glass Background (root layer)
 ```swift
-// ScribesteinAPP/Theme.swift
-import SwiftUI
-
-enum SColor {
-    static let background = Color("Surface/Background")
-    static let surface = Color("Surface/Default")
-    static let surfaceAlt = Color("Surface/Alt")
-    static let surfaceActive = Color("Surface/Active")
-
-    static let text = Color("Text/Primary")
-    static let textSecondary = Color("Text/Secondary")
-    static let textMuted = Color("Text/Muted")
-
-    static let accent = Color("Brand/Gold/600")
-    static let accentOn = Color("Brand/Navy/1000")
-
-    static let stroke = Color("Stroke/Primary")
-    static let strokeStrong = Color("Stroke/Strong")
-
-    static let success = Color("State/Success")
-    static let warning = Color("State/Warning")
-    static let danger = Color("State/Danger")
-}
-
-enum SSpace: CGFloat {
-    case xxs = 4, xs = 8, s = 12, m = 16, l = 24, xl = 32, xxl = 48, xxxl = 64
-}
-
-enum SRadius: CGFloat {
-    case tight = 4, standard = 6, loose = 8
-}
-
-struct SButtonPrimary: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .font(.system(.headline, design: .default, weight: .semibold))
-            .foregroundStyle(SColor.accentOn)
-            .padding(.vertical, 12)
-            .padding(.horizontal, 16)
-            .background(SColor.accent.opacity(configuration.isPressed ? 0.9 : 1.0))
-            .clipShape(RoundedRectangle(cornerRadius: SRadius.standard.rawValue, style: .continuous))
-    }
-}
-
-struct SButtonSecondary: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .font(.system(.headline, design: .default, weight: .semibold))
-            .foregroundStyle(SColor.accent)
-            .padding(.vertical, 12)
-            .padding(.horizontal, 16)
-            .background(SColor.surface)
-            .overlay(
-                RoundedRectangle(cornerRadius: SRadius.standard.rawValue, style: .continuous)
-                    .stroke(SColor.accent.opacity(configuration.isPressed ? 1.0 : 0.9), lineWidth: 1)
-            )
-            .clipShape(RoundedRectangle(cornerRadius: SRadius.standard.rawValue, style: .continuous))
-    }
-}
+GlassBackgroundView() // LinearGradient overlay behind all content
 ```
 
-Navigation bar appearance:
-
+### Glass Card (container)
 ```swift
-// Apply once in App init
-UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor(Color("Text/Primary"))]
-UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor(Color("Text/Primary"))]
+GlassCard {
+    Text("Content here")
+}
+// or use the modifier directly:
+VStack { ... }
+    .glassBackground(cornerRadius: 16)
 ```
 
-Example usage in views:
-
+### iOS 26 Glass Effect with Fallback
 ```swift
-// Button usage
-Button("Primary") {}
-    .buttonStyle(SButtonPrimary())
-
-Button("Secondary") {}
-    .buttonStyle(SButtonSecondary())
-
-// List row container
-RoundedRectangle(cornerRadius: SRadius.standard.rawValue, style: .continuous)
-    .fill(SColor.surface)
-    .overlay(
-        RoundedRectangle(cornerRadius: SRadius.standard.rawValue, style: .continuous)
-            .stroke(SColor.stroke, lineWidth: 1)
-    )
+// Handled automatically by GlassBackgroundModifier
+// iOS 26+: .glassEffect(.regular.tint(...))
+// iOS 17-25: .ultraThinMaterial with stroke
 ```
 
-## Screen-specific Guidance
+### Navigation Bar (translucent)
+```swift
+let navAppearance = UINavigationBarAppearance()
+navAppearance.configureWithTransparentBackground()
+navAppearance.backgroundEffect = UIBlurEffect(style: .systemUltraThinMaterial)
+```
 
-### Login
-- Logo/title top-left or center; serif Display for “Scribestein”
-- Primary CTA in gold; secondary actions as text links
+## Do / Don't
 
-### Transcript Feed
-- Filter chips as outline; active filter gold-filled
-- Date uses monospaced digits
-- Avoid default grouped list chrome; use custom row containers with borders
-
-### Transcript Detail
-- Serif Title, body with comfortable line height
-- Metadata row with secondary text and thin dividers
-
-## Do / Don’t
-
-- Do: use 4–8pt radii; 1px borders; left-aligned headers; restrained shadows
-- Don’t: pill buttons, heavy frosted backgrounds, oversized corner radii, bubbly grouped lists
-
-## Rollout Plan
-
-1) Assets: add color sets to `Assets.xcassets` as named above
-2) Theme: add `Theme.swift` and button styles; wire up environment
-3) Apply: update `LoginView`, `TranscriptFeedView`, and `ContentView` to use theme tokens
-4) QA: contrast checks, dynamic type, VoiceOver, RTL sanity pass
-5) Polish: motion and haptics; focus rings; tab indicator
-
-## Open Questions
-- Do we want a serif Display across all headers or only landing screens?
-- Custom logomark for Scribestein title?
-- Light theme variant later?
-
-
+- Do: use glass materials; subtle 0.5px borders; layered translucency; gold for CTAs
+- Do: use the GlassCard component for all content containers
+- Don't: opaque solid backgrounds on panels; heavy shadows; oversized borders
+- Don't: use gold for body text or large surface fills
+- Don't: nest glass cards inside glass cards (single layer of glass per section)

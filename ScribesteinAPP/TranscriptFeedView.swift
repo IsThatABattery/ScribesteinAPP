@@ -6,43 +6,26 @@ struct TranscriptFeedView: View {
 
     var body: some View {
         NavigationView {
-			ScrollView {
-				LazyVStack(spacing: 0) {
-					ForEach(viewModel.transcripts) { transcript in
-						TranscriptRow(transcript: transcript)
-					}
-				}
-			}
-            .background(SColor.background.ignoresSafeArea())
-            .navigationTitle("Transcripts")
-			.navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    HStack {
-                        if authViewModel.isAdmin {
-                            NavigationLink(destination: AdminSettingsView()) {
-                                Image(systemName: "gearshape.fill")
-                            }
-                        }
-                        if authViewModel.isExecUser || authViewModel.isAdmin {
-                            NavigationLink(destination: ExecView()) {
-                                Image(systemName: "briefcase.fill")
-                            }
+            ZStack {
+                Color.clear
+
+                ScrollView {
+                    LazyVStack(spacing: SSpace.s.rawValue) {
+                        ForEach(viewModel.transcripts) { transcript in
+                            TranscriptRow(transcript: transcript)
                         }
                     }
-                }
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Sign Out") {
-                        authViewModel.signOut()
-                    }
-                    .buttonStyle(SButtonTertiary())
+                    .padding(SSpace.m.rawValue)
                 }
             }
+            .navigationTitle("Transcripts")
+            .navigationBarTitleDisplayMode(.inline)
             .onAppear {
                 viewModel.fetchFromCache()
                 viewModel.subscribeToTranscripts()
             }
         }
+        .navigationViewStyle(.stack)
     }
 }
 
@@ -56,33 +39,29 @@ struct TranscriptFeedView_Previews: PreviewProvider {
 struct TranscriptRow: View {
     let transcript: Transcript
     var body: some View {
-        VStack(spacing: 0) {
-            HStack {
-                VStack(alignment: .leading, spacing: 6) {
-                    Text(transcript.transcript)
-                        .font(.headline)
-                        .multilineTextAlignment(.leading)
-                        .fixedSize(horizontal: false, vertical: true)
-                        .foregroundStyle(SColor.text)
-                    HStack(spacing: 12) {
-                        Text(transcript.formattedTimestamp)
-                            .font(.subheadline.monospacedDigit())
-                            .foregroundStyle(SColor.textSecondary)
-                        Text(transcript.formattedConfidence)
-                            .font(.subheadline.monospacedDigit())
-                            .foregroundStyle(SColor.textSecondary)
-                    }
-                }
-                Spacer()
-            }
-            .padding(.horizontal, SSpace.l.rawValue)
-            .padding(.vertical, SSpace.m.rawValue)
+        GlassCard(padding: SSpace.m.rawValue) {
+            VStack(alignment: .leading, spacing: SSpace.xs.rawValue) {
+                Text(transcript.transcript)
+                    .font(.body)
+                    .multilineTextAlignment(.leading)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .foregroundStyle(SColor.text)
 
-            Rectangle()
-                .fill(SColor.stroke)
-                .frame(height: 1)
+                HStack(spacing: SSpace.s.rawValue) {
+                    Label(transcript.formattedTimestamp, systemImage: "clock")
+                        .font(.caption.monospacedDigit())
+                        .foregroundStyle(SColor.textSecondary)
+
+                    Spacer()
+
+                    Text(transcript.formattedConfidence)
+                        .font(.caption.monospacedDigit())
+                        .foregroundStyle(SColor.textMuted)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 3)
+                        .glassBackground(cornerRadius: SRadius.tight.rawValue)
+                }
+            }
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .background(Color.clear)
     }
 }
