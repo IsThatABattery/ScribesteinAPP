@@ -18,9 +18,16 @@ struct TranscriptFeedView: View {
 			.navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    if authViewModel.isAdmin {
-                        NavigationLink(destination: AdminSettingsView()) {
-                            Image(systemName: "gearshape.fill")
+                    HStack {
+                        if authViewModel.isAdmin {
+                            NavigationLink(destination: AdminSettingsView()) {
+                                Image(systemName: "gearshape.fill")
+                            }
+                        }
+                        if authViewModel.isExecUser || authViewModel.isAdmin {
+                            NavigationLink(destination: ExecView()) {
+                                Image(systemName: "briefcase.fill")
+                            }
                         }
                     }
                 }

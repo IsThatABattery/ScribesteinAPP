@@ -14,15 +14,29 @@
 		443CA1792E4BE3A2003744B4 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 443CA1782E4BE3A2003744B4 /* GoogleSignInSwift */; };
 		4488B52A2E4C5A2B00C8F4DA /* FirebaseAuthCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 4488B5292E4C5A2B00C8F4DA /* FirebaseAuthCombine-Community */; };
 		44D382A62E65FA7800D40E76 /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = 44D382A52E65FA7800D40E76 /* FirebaseFunctions */; };
+		44DFF47E2E668161002B7E91 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 44DFF47D2E668161002B7E91 /* FirebaseMessaging */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		443CA1452E4B8F21003744B4 /* ScribesteinAPP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScribesteinAPP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		44DFF47C2E6680F0002B7E91 /* Exceptions for "ScribesteinAPP" folder in "ScribesteinAPP" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 443CA1442E4B8F21003744B4 /* ScribesteinAPP */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		443CA1472E4B8F21003744B4 /* ScribesteinAPP */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				44DFF47C2E6680F0002B7E91 /* Exceptions for "ScribesteinAPP" folder in "ScribesteinAPP" target */,
+			);
 			path = ScribesteinAPP;
 			sourceTree = "<group>";
 		};
@@ -33,6 +47,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				44DFF47E2E668161002B7E91 /* FirebaseMessaging in Frameworks */,
 				443CA1792E4BE3A2003744B4 /* GoogleSignInSwift in Frameworks */,
 				44D382A62E65FA7800D40E76 /* FirebaseFunctions in Frameworks */,
 				4488B52A2E4C5A2B00C8F4DA /* FirebaseAuthCombine-Community in Frameworks */,
@@ -89,6 +104,7 @@
 				443CA1782E4BE3A2003744B4 /* GoogleSignInSwift */,
 				4488B5292E4C5A2B00C8F4DA /* FirebaseAuthCombine-Community */,
 				44D382A52E65FA7800D40E76 /* FirebaseFunctions */,
+				44DFF47D2E668161002B7E91 /* FirebaseMessaging */,
 			);
 			productName = ScribesteinAPP;
 			productReference = 443CA1452E4B8F21003744B4 /* ScribesteinAPP.app */;
@@ -279,11 +295,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = ScribesteinAPP/ScribesteinAPP.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ScribesteinAPP/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ScribesteinAPP/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Scribestein;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -294,7 +312,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jvolchyok.ScribesteinAPP;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -308,11 +326,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = ScribesteinAPP/ScribesteinAPP.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ScribesteinAPP/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ScribesteinAPP/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Scribestein;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -323,7 +343,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jvolchyok.ScribesteinAPP;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -409,6 +429,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 443CA1662E4BA7E3003744B4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFunctions;
+		};
+		44DFF47D2E668161002B7E91 /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 443CA1662E4BA7E3003744B4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

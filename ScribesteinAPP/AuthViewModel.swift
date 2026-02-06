@@ -10,6 +10,7 @@ class AuthViewModel: ObservableObject {
     @Published var isLoading = false
     @Published var infoMessage: String?
     @Published var isEmailVerified: Bool = false
+    @Published var isExecUser: Bool = false
 
     private var handle: AuthStateDidChangeListenerHandle?
     private var tokenHandle: IDTokenDidChangeListenerHandle?
@@ -26,6 +27,7 @@ class AuthViewModel: ObservableObject {
         self.tokenHandle = Auth.auth().addIDTokenDidChangeListener { [weak self] (auth, user) in
             guard let user = user else {
                 self?.isAdmin = false
+                self?.isExecUser = false
                 return
             }
             
@@ -33,13 +35,16 @@ class AuthViewModel: ObservableObject {
                 if let error = error {
                     print("Error getting ID token result: \(error.localizedDescription)")
                     self?.isAdmin = false
+                    self?.isExecUser = false
                     return
                 }
                 
-                if let isAdmin = result?.claims["admin"] as? Bool, isAdmin {
-                    self?.isAdmin = true
+                if let claims = result?.claims {
+                    self?.isAdmin = claims["admin"] as? Bool ?? false
+                    self?.isExecUser = claims["exec"] as? Bool ?? false
                 } else {
                     self?.isAdmin = false
+                    self?.isExecUser = false
                 }
             }
         }
@@ -86,6 +91,7 @@ class AuthViewModel: ObservableObject {
             self.isEmailVerified = false
             self.errorMessage = nil
             self.infoMessage = nil
+            self.isExecUser = false
         } catch let signOutError as NSError {
             self.errorMessage = signOutError.localizedDescription
         }

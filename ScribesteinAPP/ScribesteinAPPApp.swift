@@ -4,11 +4,10 @@ import UIKit
 
 @main
 struct ScribesteinAPPApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @StateObject private var authViewModel = AuthViewModel()
 
     init() {
-        FirebaseApp.configure()
-
         let navAppearance = UINavigationBarAppearance()
         navAppearance.configureWithOpaqueBackground()
         navAppearance.backgroundColor = UIColor(Color("Surface/Default"))
@@ -35,3 +34,4 @@ struct ScribesteinAPPApp: App {
         }
     }
 }
+
