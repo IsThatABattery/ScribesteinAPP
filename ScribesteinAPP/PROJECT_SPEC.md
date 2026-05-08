@@ -2,11 +2,11 @@
 
 ## 1. Overview
 
-ScribesteinAPP is a read-only iOS application that displays a real-time feed of transcripts from a Google Firestore database. It is designed to be a lightweight, view-only client that listens for and displays data as it is added to the backend.
+ScribesteinAPP is a read-only iOS application that displays a real-time feed of transcripts from a Google Firestore database. It is a lightweight, view-only client that listens for and displays data as it is added to the backend.
 
 ## 2. Architecture
 
-The application follows a modern MVVM (Model-View-ViewModel) architecture, which is well-suited for SwiftUI development.
+The application follows an MVVM (Model-View-ViewModel) architecture for SwiftUI development.
 
 -   **Model**: The `Transcript` struct defines the data structure for the transcript entries. It is `Codable` for easy decoding from Firestore and `Identifiable` to be used in SwiftUI lists.
 -   **View**: The `TranscriptFeedView` is the main UI component. It is responsible for presenting the list of transcripts to the user.
@@ -74,7 +74,7 @@ The application follows a modern MVVM (Model-View-ViewModel) architecture, which
 -   **Firebase/Auth**: For user authentication.
 -   **Firebase/Firestore**: The app relies on the `FirebaseFirestore` and `FirebaseFirestoreSwift` libraries to interact with the Firestore database. These are managed via Swift Package Manager.
 
-This specification provides a complete technical overview of the ScribesteinAPP.
+This specification documents the main ScribesteinAPP components and data flow.
 
 ## User Authentication and Permissions
 

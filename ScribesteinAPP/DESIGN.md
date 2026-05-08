@@ -11,7 +11,7 @@ A liquid glass interface for fraternity operations. Translucent, layered panels 
 - Gold is precious: use sparingly to guide action
 - Glass panels create hierarchy through layering
 - Clean typography over frosted surfaces
-- Native feel — leverage platform materials
+- Native feel - use platform materials
 
 ## Color System
 

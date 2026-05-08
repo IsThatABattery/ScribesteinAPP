@@ -5,7 +5,7 @@ ScribesteinAPP is a read-only iOS application that displays a real-time feed of 
 ## Features
 
 -   **Real-time Transcript Feed**: Displays a live-updating list of transcripts.
--   **Firebase Integration**: Built on Firebase for a scalable and real-time backend.
+-   **Firebase Integration**: Built on Firebase for authentication and Firestore transcript updates.
 -   **User Authentication**: Secure sign-in with Google.
 -   **Role-Based Permissions**: Supports admin users with access to additional features.
 
